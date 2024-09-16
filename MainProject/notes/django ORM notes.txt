@@ -1,0 +1,417 @@
+Here Model_name is CLASS
+
+CRUD
+
+
+####  django ORM
+
+	python manage.py shell_plus --print-sql
+
+Insert/Create:
+
+	object_name = model_name(att='val',att='val'...)
+	object_name.save() 
+	obj = model_name.objects.create(att='val',att='val'...)
+	obj1=Animal('sound')
+	obj1.save()
+
+	Eg:
+		u1 = User(username='user1',password='123')
+		u1.save()
+
+
+
+Select/Read:
+	model_name.objects.all()
+	
+	Eg:
+		User.objects.all()
+
+
+Where/Read:
+ 	
+	model_name.objects.filter(attribute=''value')# returns queryset
+	opposite of filter is exclude()
+
+	Eg:
+		User.objects.filter(first_name='admin')
+		User.objects.exclude(first_name='admin')
+limit 1 /Read:
+
+	model_name.objects.first()
+	Eg:
+		User.ojects.first()
+
+GET():
+	model_name.objects.get(att='value')# returns single object
+					# provide Unique val 
+
+	Eg:
+		User.ojects.get(username='user1')
+Delete:
+
+	model_name.objects.all().delete()
+	model_name.objects.filter(condition).delete()
+	model_name.objects.get(condition).delete() # gives single object
+	
+	Eg:
+		User.objects.filter(first_name='admin').delete()
+
+
+
+#### Limit Offset
+	use [] at the end of queryset 
+	[start after:up till total count]
+	[:10] top 10 recods
+	[10:20] skip 10 records and then fetch 10 records
+
+	Eg:
+		User.objects.all()[5:7]  
+
+
+
+
+####order_by
+
+
+	in models 
+		class Meta:
+        		ordering = [F('first_name').asc(nulls_last=True)]
+
+		class Meta:
+        		ordering = ['-first_name', 'last_name']
+	
+
+	.order_by('first_name','last_name')
+	.order_by('-first_name','last_name')
+
+
+
+
+	filter(~Q(id__range=(1,5)))
+	Use the Django exists() method to check if a QuerySet contains any rows.
+
+
+#### Like 
+
+
+	field_name__startswith='substring'	field_name LIKE 'substring%'	return True if field_name starts with a substring.
+	field_name__istartswith='substring'	UPPER(field_name) LIKE UPPER('%substring')	return True if field_name starts with a substring case-insensitively
+	field_name__endswith='substring'	field_name LIKE '%substring'	return True if field_name ends with a substring.
+	field_name__iendswith='substring'	UPPER(field_name) LIKE UPPER('substring%')	return True if field_name ends with a substring case-insensitively
+	field_name__contains='substring'	field_name LIKE '%substring%'	return True if field_name contains a substring.
+	field_name__icontains='substring'	UPPER(field_name) LIKE UPPER('%substring%')	return True if field_name contains a substring case insensitively.
+
+
+#### In 
+
+
+
+
+	in  operator #  select * from Table where id in (10,20,30,40,50);
+	filter(feildName__in = (10,20,30))
+	filter(~Q(feildName__in = (10,20,30)))
+
+u=User.objects.get(username='user2')
+u.first_name='this is new name'
+u.save()
+
+
+####range or Between Operator
+	filter(feildName__range = (10,20))    #in SQL it is Between
+	filter(~Q(feildName__range = (10,20)))
+
+
+#### Null Not Null
+
+	to get Null and Not Null value
+	filter(fieldName__isnull=True)
+	filter(fieldName__isnull=False)
+
+
+
+
+
+
+#### Exists
+	if query_set.exists():
+  		 print('the queryset has at least one object')
+	In this example, the exists() method returns True. It selects only the
+	 first row to determine whether the QuerySet contains any row.
+
+	If you do not use the exists() method, the QuerySet will get all the rows 
+	from the hr_employee table:
+
+	Employee.objects.filter(first_name__startswith='J').exists()
+
+
+
+
+## Aggregate methods 
+	Employee.objects.count()
+	Employee.objects.aggregate(Max('salary'))
+	Employee.objects.aggregate(Min('salary')) 
+	Employee.objects.aggregate(Avg('salary'))
+	Employee.objects.aggregate(Sum('salary')) 
+
+##Only and Defer
+		.only('id','username')
+		.defer('username')
+
+
+
+## Less then and Greater then
+
+		field__gt=20
+		field__gte=20
+		field__lt=20
+		field__lte=10
+	Product.objects.filter(price__gt=100)
+						> < ==
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def foo(a,b):
+
+
+
+
+
+
+#### One TO One Feild
+
+
+	OneToOneField(to, on_delete, parent_link=False, **options)
+
+
+	on_delete Options
+
+
+		CASCADE
+		PROTECT
+		RESTRICT
+		SET_NULL
+		SET_DEFAULT
+		DO_NOTHING
+
+		CASCADE_ADMIN
+
+
+#### Select Related 
+
+	model_name.objects.select_related('OneToOneFeild_name').all()
+	#it apply the left outer join with related feild
+	Customer.objects.select_relate('user').all
+	by default the null is set to False
+	so we have to specify the default value to enter in DB
+	or we can specify the null = True or blank = True
+
+
+#### One to Many
+
+	# to get the child object from the parent we can use 
+	child_set
+	Fif, get all employees of a department using use the employee_set attribute like this:
+
+	>>> d.employee_set.all()
+	<QuerySet [<Employee: John Doe>, <Employee: Jane Doe>]>
+
+
+	Note that we did not define the employee_set property in
+	the Department model. Internally, Django automatically 
+	added the employee_set property to the Department model 
+	when we defined the one-to-many relationship using the
+	ForeignKey.
+
+
+
+	>>> Employee.objects.select_related('department').all()
+	this apply the inner join with parent table
+
+
+#### Many to Many relation 
+
+	we use  composite primary key. meaning we combine two foriegn key to define primary key
+	which is inside the third table to deal with manyToMany relation in RDBMS
+
+	but django create the id coxlumn and set it to primary 
+	and insted of creating composite primary it create unique constraint 
+
+	To create a many-to-many relationship in Django, you use the ManyToManyField.
+		.add()
+		.remove()
+
+
+
+
+#### Many to Many Feild with Through
+	
+	class Employee(models.Model):
+   	# ...
+
+	class Job(models.Model):
+		title = models.CharField(max_length=255)
+ 		employees = models.ManyToManyField(Employee, through='Assignment')
+
+    		def __str__(self):
+        		return self.title
+
+
+	class Assignment(models.Model):
+    		employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    		position = models.ForeignKey(Job, on_delete=models.CASCADE)
+    		begin_date = models.DateField()
+    		end_date = models.DateField(default=date(9999, 12, 31))
+
+
+
+
+
+
+
+
+####order_by
+
+
+	in models 
+		class Meta:
+        		ordering = [F('first_name').asc(nulls_last=True)]
+
+		class Meta:
+        		ordering = ['-first_name', 'last_name']
+	.order_by('first_name','last_name')
+	.order_by('-first_name','last_name')
+
+
+
+
+
+
+
+	filter(~Q(id__range=(1,5)))
+	Use the Django exists() method to check if a QuerySet contains any rows.
+
+
+#### Like 
+
+
+	field_name__startswith='substring'	field_name LIKE '%substring'	return True if field_name starts with a substring.
+	field_name__istartswith='substring'	UPPER(field_name) LIKE UPPER('%substring')	return True if field_name starts with a substring case-insensitively
+	field_name__endswith='substring'	field_name LIKE 'substring%'	return True if field_name ends with a substring.
+	field_name__iendswith='substring'	UPPER(field_name) LIKE UPPER('substring%')	return True if field_name ends with a substring case-insensitively
+	field_name__contains='substring'	field_name LIKE '%substring%'	return True if field_name contains a substring.
+	field_name__icontains='substring'	UPPER(field_name) LIKE UPPER('%substring%')	return True if field_name contains a substring case insensitively.
+
+
+#### In 
+
+
+
+
+	in  operator #  select * from Table where id in (10,20,30,40,50);
+	filter(feildName__in = (10,20,30))
+	filter(~Q(feildName__in = (10,20,30)))
+
+
+
+
+####range or Between Operator
+	filter(feildName__range = (10,20))    #in SQL it is Between
+	filter(~Q(feildName__range = (10,20)))
+
+
+#### Null Not Null
+
+	to get Null and Not Null value
+	filter(fieldName__isnull=True)
+	filter(fieldName__isnull=False)
+
+
+#### Exists
+	if query_set.exists():
+  		 print('the queryset has at least one object')
+	In this example, the exists() method returns True. It selects only the
+	 first row to determine whether the QuerySet contains any row.
+
+	If you do not use the exists() method, the QuerySet will get all the rows 
+	from the hr_employee table:
+
+	Employee.objects.filter(first_name__startswith='J').exists()
+
+
+## Aggregate methods 
+	Employee.objects.count()
+	Employee.objects.aggregate(Max('salary'))
+	Employee.objects.aggregate(Min('salary')) 
+	Employee.objects.aggregate(Avg('salary'))
+	Employee.objects.aggregate(Sum('salary')) 
+
+
+
+
+#### Django Group By with Sum example
+	Similarly, you can use the Sum() aggregate to calculate the total salary of employees in each department:
+
+	>>> (Employee.objects
+	...     .values('department')
+	...     .annotate(total_salary=Sum('salary'))
+	...     .order_by('department')
+	...  )
+
+
+
+
+
+#### Django group by with having
+	To apply a condition to the groups, you use the filter() method. For example, the following uses the filter() method to get the department with head counts are more than 30:
+
+	>>> (Department.objects
+	...     .values('name')
+	...     .annotate(
+	...         head_count=Count('employee')
+	...     )
+	...     .filter(head_count__gt=30)
+	...  )

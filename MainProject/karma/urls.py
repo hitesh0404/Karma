@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,6 +35,6 @@ urlpatterns = [
     path('confirmation/',TemplateView.as_view(template_name='confirmation.html'),name="confirmation"),
     path('blog/',TemplateView.as_view(template_name='blog.html'),name="blog"),
     path('single-blog/',TemplateView.as_view(template_name='single-blog.html'),name="single-blog"),
-
+    path('product/',include('product.urls')),
 
 ]

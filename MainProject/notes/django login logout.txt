@@ -1,0 +1,73 @@
+Login 
+
+1.start app account
+2.Register the app in setings.py installed apps list
+3.create new urlpatterns list in urls.py file in account
+4.include the url file of acccount in main urls.py file
+
+
+5.add login path
+	path('login/', views.sign_in, name='login'),
+
+6.create login form inside forms.py file
+	from django import forms
+
+
+	class LoginForm(forms.Form):
+    		username = forms.CharField(max_length=65)
+    		password = forms.CharField(max_length=65, widget=forms.PasswordInput)
+
+
+7.create sign_in function inside views.py file
+
+
+8.create temaplates/account/login.html
+	{% extends 'base.html' %}
+
+	{% block content %}
+	<form method="POST" novalidate>
+		{% csrf_token %}
+		<h2>Login</h2>
+		{{form.as_p}}
+		<input type="submit" value="Login" />
+	</form>
+
+	{% endblock content%}
+
+
+9.write the code in view for request.method == post
+
+
+
+
+def sign_in(request):
+    if request.method=='get':
+        form = LoginForm()
+        return render(request,'account/login.html',{'form':form})
+    elif request.method =='post':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username,password=password)
+            if user:
+                login(request,user)
+                return redirect('home')
+        return render(request,'account/login.html',{'form':form})
+        
+
+
+
+
+
+
+10.write logic for logout 
+	def sign_out(request):
+		logout(request)
+		messages.success(request,f'You have been logged out.')
+		return redirect('login')        
+
+
+u can set the LOGIN_URL in setting.py file which is used by the 
+@login_required decorator to redirect the user to login
+the default is accounts/login 
