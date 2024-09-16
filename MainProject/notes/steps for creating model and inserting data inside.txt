@@ -1,0 +1,20 @@
+ 
+models.py
+
+
+class ProductType(models.Model):
+    id  = models.IntegerField(models.AutoField,primary_key=True,)
+    name = models.CharField(max_length=25)
+    description = models.TextField(verbose_name='desc')
+
+
+
+
+
+cmd 
+
+
+ 1. locate to your poject 
+ 2. start env 
+ 3. python manage.py makemigrations
+ 4. python manage.py migrate

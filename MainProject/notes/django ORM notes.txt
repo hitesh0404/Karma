@@ -145,6 +145,30 @@ u.save()
 	Employee.objects.filter(first_name__startswith='J').exists()
 
 
+#### Q object
+
+	Q(id__range=(1, 5)) & Q(status='active')
+	Q(id__range=(1, 5)) | Q(name__icontains='example')
+	~Q(id__range=(1, 5))
+	filter(Q(id__range=(1, 5)),Q(is_active=True))
+
+
+from datetime import date
+
+queryset = MyModel.objects.filter(Q(created_at__date=date.today()))  # records created today
+queryset = MyModel.objects.filter(Q(created_at__year=2024))           # records created in the year 2024
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## Aggregate methods 
