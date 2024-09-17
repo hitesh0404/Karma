@@ -10,6 +10,10 @@ def products(request):
     }
     return render(request, 'product/products_list.html',context)
 
-
+def add_product(request):
+    if request.method == 'POST':
+        return render(request, 'product/products_list.html',)#trial
+    elif request.method == 'GET':
+        return render(request, 'product/add_product.html')
 # p1=Product()
 # p1.save()
