@@ -1,21 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<br><br><br><br><br><br>
 {% for pro in products %}
 <div class="product">
     <h2>{{ pro.name }}</h2>
     <p>Price: {{ pro.price }}</p>
     <br><br>
 </div>
-{% endfor %}
+<div>
+    <form action="{% url 'update_product' pro.id %}" method="get">
+        <input type="submit" value="update product">
+    </form>
+    
+    <a href="{% url 'delete_product' pro.id %}">Delete</a>
 
-{% for cat in categories %}
-<div class="product">
-    <h2>{{ cat.name }}</h2>
-    <br><br>
+    <hr>
 </div>
 {% endfor %}
+
 
 
 {% endblock %}

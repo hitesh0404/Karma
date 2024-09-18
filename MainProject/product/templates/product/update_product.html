@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <h2 style="text-align: center; height: 50px;">Add Product</h2>
+    <h2 style="text-align: center; height: 50px;">Update Product</h2>
     <div style="display: flex;justify-content: center;
      align-items: center; width: 100%;  height: max-content;  
       ">
@@ -18,11 +18,11 @@
             <form action="" method="post">
                 {% csrf_token %}
                 <label for="">Product Name</label><br>
-                <input type="text" name="name" placeholder="Product name"><br>
+                <input type="text" name="name" placeholder="Product name" value="{{product.name}}"><br>
                 <label for="">Product Price</label><br>
-                <input type="number" name="price" placeholder="Product price" step="0.01"><br>
+                <input type="number" name="price" placeholder="Product price" step="0.01"  value="{{product.price}}"><br>
                 <br>
-                <input type="submit" value="Add Product">
+                <input type="submit" value="Update Product">
 
             </form>
         </div>
