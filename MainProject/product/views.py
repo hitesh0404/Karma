@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Product,Category
+from .models import Product,Category,ProductType
 # Create your views here.
 def products(request):
     data = Product.objects.all()
@@ -9,6 +9,14 @@ def products(request):
         # 'categories':cate
     }
     return render(request, 'product/products_list.html',context)
+
+def product_types(request):
+    data = ProductType.objects.all()
+    context = {
+        'product_types':data
+    }
+    return render(request,'product/product_types.html',context)
+
 
 def add_product(request):
     if request.method == 'POST':
@@ -44,3 +52,17 @@ def delete_product(request,id):
 
 # p1=Product()
 # p1.save()
+
+
+
+
+def delete_product_type(request,id):
+    product_type = get_object_or_404(ProductType,id=id)
+    return render(request,'product/confirm.html',{'product_type': product_type})
+
+
+
+def confirm_delete_product_type(request,id):
+    product_type = get_object_or_404(ProductType,id=id)
+    product_type.delete()
+    return redirect('products')
