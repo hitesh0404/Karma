@@ -66,3 +66,42 @@ def confirm_delete_product_type(request,id):
     product_type = get_object_or_404(ProductType,id=id)
     product_type.delete()
     return redirect('products')
+
+
+def create_product_type(request):
+    if request.method == 'GET':
+        return render(request, 'product/create_product_type.html')
+    elif request.method == 'POST':
+        
+        n = request.POST.get('name')
+        d = request.POST.get('desc') 
+        if n and d:
+            ProductType.objects.create(name=n,desc=d)
+            return redirect('product_types')
+        else:
+            return render(request, 'product/create_product_type.html',{'error':'Please fill all fields'})
+        
+
+
+def update_product_type(request):
+    data  = ProductType.objects.all()
+    return render(request,'product/update_product_types.html',{'types':data})
+
+
+def update_data(request,id):
+    product_type = get_object_or_404(ProductType,id=id)
+    return render(request,'product/update_product_data.html',{'product_type':product_type})
+
+
+def confirm_update_product_type(request,id):
+    product_type = get_object_or_404(ProductType,id=id)
+    n = request.GET.get('name')
+    d = request.GET.get('description')
+    
+    product_type.name = n
+    product_type.description = d
+    if n and d:
+        product_type.save()
+        return redirect('update_product_type')
+    else:
+        return render(request,'product/update_product_data.html',{'product_type':product_type})
