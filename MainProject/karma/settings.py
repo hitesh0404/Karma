@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'product.apps.ProductConfig',
+    'products.apps.ProductsConfig',
     'django_extensions',
     #python manage.py shell_plus --print-sql
     # u = User.objects.all()

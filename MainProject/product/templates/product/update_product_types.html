@@ -1,7 +1,0 @@
-{% for t in types %}
-
-{{t.id}}                <br>
-{{t.name}}              <br>
-{{t.description}}       <br> 
-<a href="{% url 'update_data' t.id %}">Update</a>   <br>
-{% endfor %}

@@ -35,6 +35,6 @@ urlpatterns = [
     path('confirmation/',TemplateView.as_view(template_name='confirmation.html'),name="confirmation"),
     path('blog/',TemplateView.as_view(template_name='blog.html'),name="blog"),
     path('single-blog/',TemplateView.as_view(template_name='single-blog.html'),name="single-blog"),
-    path('product/',include('product.urls')),
+    path('products/',include('products.urls')),
 
 ]
