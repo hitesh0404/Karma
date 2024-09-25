@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<h2>Update Product</h2>
+<form method="post">
+{% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Add Product">
+</form>
+
+
+{% endblock %}

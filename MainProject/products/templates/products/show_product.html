@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% for p in products %}
+    {{p.id}}
+    {{p.name}}
+    {{p.price}}
+    <a href="{% url 'update_product' p.id %}"> Update this product</a><br><hr><br>
+{% endfor %}
+
+{% endblock %}
