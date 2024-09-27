@@ -19,6 +19,7 @@ class AddProduct(View):
 class UpdateProduct(View):
     def get(self,request,id):
         product = get_object_or_404(Product,id=id)
+        # product = Product.objects.get(id=id)
         if product:
             form = ProductForm(instance=product)
             return render(request,'products/update_product.html',{'form':form})
