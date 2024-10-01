@@ -1,4 +1,15 @@
 from django.db import models
+class HsnCode(models.Model):
+    index = models.BigAutoField(primary_key=True)
+    item_code = models.BigIntegerField(verbose_name='Item Code',null=True) 
+    item_name = models.TextField(verbose_name='Item Name',null=True) 
+    item_type = models.TextField(verbose_name='Item Type',null=True) 
+    GSTe = models.DecimalField(max_digits=5,decimal_places=2,verbose_name=r'GST %e',null=True)
+    hsn_code = models.BigIntegerField(verbose_name='HSN Code',null=True)
+    GST = models.DecimalField(max_digits=5,decimal_places=2,verbose_name='GST %',null=True)
+    class Meta:
+        db_table = 'hsn_code'
+
 
 class Brand(models.Model):
     name = models.CharField(max_length=30, unique=True)
@@ -13,9 +24,18 @@ class Brand(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=20)
-    price = models.DecimalField(decimal_places=2,max_digits=10)
+    price_inclusive = models.DecimalField(decimal_places=2,max_digits=10)
     description = models.TextField(default='default Description')
     brand = models.ForeignKey(Brand,on_delete=models.CASCADE,null=True)
+    gst_rate = models.DecimalField(max_digits=5,decimal_places=2,default=5.00)
+    hsn_code = models.CharField(max_length=10,default=None)
+    @property
+    def price_exclusive(self):
+        return self.price_inclusive / (1 + (self.gst_rate / 100))
+    @property
+    def gst_amount(self):
+        return self.price_inclusive - self.price_exclusive
+    
     def __str__(self):
         return f'({self.name}) from {self.brand.name}'
     # image = models.ImageField(upload_to='products/')

@@ -37,4 +37,6 @@ urlpatterns = [
     path('single-blog/',TemplateView.as_view(template_name='single-blog.html'),name="single-blog"),
     path('products/',include('products.urls')),
     path('accounts/',include('accounts.urls')),
+    path('cart/',include('cart.urls')),
+    path('order/',include('order.urls')),
 ]

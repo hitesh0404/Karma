@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'products.apps.ProductsConfig', 
     'accounts.apps.AccountsConfig',
+    'cart.apps.CartConfig',
+    'order.apps.OrderConfig',
     'django_extensions',
     #python manage.py shell_plus --print-sql
     # u = User.objects.all()
@@ -91,11 +93,11 @@ WSGI_APPLICATION = 'karma.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'karma',
+        'NAME': 'karma_new',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',  # Set to 'localhost' or your database server address
-        'PORT': '3308',  # Default port for MySQL/MariaDB
+        'PORT': '3306',  # Default port for MySQL/MariaDB
     }
 }
 
