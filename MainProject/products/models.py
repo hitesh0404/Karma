@@ -7,8 +7,11 @@ class HsnCode(models.Model):
     GSTe = models.DecimalField(max_digits=5,decimal_places=2,verbose_name=r'GST %e',null=True)
     hsn_code = models.BigIntegerField(verbose_name='HSN Code',null=True)
     GST = models.DecimalField(max_digits=5,decimal_places=2,verbose_name='GST %',null=True)
-    class Meta:
-        db_table = 'hsn_code'
+    
+    # class Meta:
+    #     db_table = 'hsn_code'
+    def __str__(self) -> str:
+        return f'{self.item_code}-{self.GSTe}%--{self.hsn_code}--{self.GST}'
 
 
 class Brand(models.Model):
@@ -21,7 +24,8 @@ class Brand(models.Model):
         return f'({self.name}) : {self.description}'
 
 
-
+    
+from django.shortcuts import get_object_or_404
 class Product(models.Model):
     name = models.CharField(max_length=20)
     price_inclusive = models.DecimalField(decimal_places=2,max_digits=10)
@@ -29,6 +33,11 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand,on_delete=models.CASCADE,null=True)
     gst_rate = models.DecimalField(max_digits=5,decimal_places=2,default=5.00)
     hsn_code = models.CharField(max_length=10,default=None)
+    # def save(self,commit=False):
+    #     data = get_object_or_404(HsnCode,item_code=self.hsn_code)
+    #     if (data):
+    #         self.gst_rate = data.GSTe
+    #     super().save()
     @property
     def price_exclusive(self):
         return self.price_inclusive / (1 + (self.gst_rate / 100))
