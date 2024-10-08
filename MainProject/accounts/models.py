@@ -7,7 +7,7 @@ gender_choice = (('M','Male'),
 class Customer(models.Model):
     user  = models.OneToOneField(User,on_delete=models.CASCADE)
     gender = models.CharField(choices=gender_choice,max_length=1,default=None)
-    D_O_B = models.DateField(default=None)
+    D_O_B = models.DateField(default=None )
     
 
 STATE_CHOICES = [

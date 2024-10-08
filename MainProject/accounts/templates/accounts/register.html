@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<br><br><br><br><br><br>
+<h1>Register</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    {% for field in user_form %}
+    <p>
+        {{field.label_tag}}
+        {{field}}
+        {{field.errors}}
+    </p>
+    {% endfor %}
+    {% for field in customer_form %}
+    <p>
+        {{field.label_tag}}
+        {{field}}
+        {{field.errors}}
+    </p>
+    {% endfor %}
+    <input type="submit" value="Register">
+</form>
+
+
+
+
+{% endblock %}
