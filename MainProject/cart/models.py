@@ -11,3 +11,7 @@ class Cart(models.Model):
     quantity = models.IntegerField(validators =[MinValueValidator(1)])
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        unique_together = [['user','product']]
+    def __str__(self) -> str:
+        return self.product.name +' added by ' +self.user.username

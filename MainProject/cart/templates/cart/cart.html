@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<br><br><br><br><br><br>
+<h2>cart page</h2>
+{% if cart %}
+<form action="{% url 'update_cart' %}">
+{% for item in cart %}
+<div class="card" style="width: 18rem;">
+  
+    <div class="card-body">
+        <h5 class="card-title">{{ item.product.name }}</h5>
+        <p class="card-text">price: {{ item.product.price_inclusive }}</p>
+        
+        <p class="card-text">quantity:
+       
+            <input type="number" min="1" max="{{item.product.quantity}}" step="1" 
+             value="{{ item.quantity }}" name="{{item.id}}">
+        </p>
+
+
+        
+        
+    </div>
+</div>
+</div>
+{% endfor %}
+<a href="{% url 'clear_cart' %}" style="color:red"> Clear Cart</a>
+<input type="submit" value="Update Cart">
+</form>
+{% else %}
+<p>your cart is empty</p>
+{% endif %}
+
+
+
+
+{% endblock %}

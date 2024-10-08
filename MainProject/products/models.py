@@ -8,8 +8,8 @@ class HsnCode(models.Model):
     hsn_code = models.BigIntegerField(verbose_name='HSN Code',null=True)
     GST = models.DecimalField(max_digits=5,decimal_places=2,verbose_name='GST %',null=True)
     
-    # class Meta:
-    #     db_table = 'hsn_code'
+    class Meta:
+        db_table = 'products_hsncode'
     def __str__(self) -> str:
         return f'{self.item_code}-{self.GSTe}%--{self.hsn_code}--{self.GST}'
 
@@ -33,6 +33,7 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand,on_delete=models.CASCADE,null=True)
     gst_rate = models.DecimalField(max_digits=5,decimal_places=2,default=5.00)
     hsn_code = models.CharField(max_length=10,default=None)
+    quantity =  models.IntegerField(default=1)
     # def save(self,commit=False):
     #     data = get_object_or_404(HsnCode,item_code=self.hsn_code)
     #     if (data):

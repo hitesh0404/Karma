@@ -11,6 +11,7 @@
     {{p.name}}
     {{p.price}}
     <a href="{% url 'update_product' p.id %}"> Update this product</a><br><hr><br>
+    <a href="{% url 'add_to_cart' p.id %}">Add To Cart</a><br><hr><br>
 {% endfor %}
 
 {% endblock %}
