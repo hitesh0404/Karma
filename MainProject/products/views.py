@@ -8,7 +8,7 @@ class AddProduct(View):
         form = ProductForm()
         return render(request,'products/add_product.html',{'form':form})
     def post(self,request):
-        form = ProductForm(request.POST)
+        form = ProductForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()
             return redirect('/')
@@ -25,7 +25,7 @@ class UpdateProduct(View):
             return render(request,'products/update_product.html',{'form':form})
     def post(self,request,id):
         product = get_object_or_404(Product,id=id)
-        form = ProductForm(request.POST,instance=product)
+        form = ProductForm(request.POST,request.FILES,instance=product)
         if form.is_valid():
             form.save()
             return redirect('/')

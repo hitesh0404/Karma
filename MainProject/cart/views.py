@@ -2,6 +2,9 @@ from django.shortcuts import get_object_or_404, redirect,render
 from django.contrib.auth.models import User
 from .models import Cart
 from products.models import Product
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def add_to_cart(request,id):
     user = request.user
     user = get_object_or_404(User,username=user)
@@ -22,20 +25,20 @@ def add_to_cart(request,id):
         Cart.objects.create(user=user,product = product,quantity=1)
     return redirect('product_list')
 
-
+@login_required
 def cart(request):
     user  = get_object_or_404(User,username=request.user)
     cart = Cart.objects.filter(user = user)
     return render(request,'cart/cart.html',{'cart':cart})
 
 
-
+@login_required
 def clear_cart(request):
     user  = get_object_or_404(User,username=request.user)
     Cart.objects.filter(user = user).delete()
     return redirect('product_list')
 
-
+@login_required
 def update_cart(request):
     user  = get_object_or_404(User,username=request.user)
     cart = Cart.objects.filter(user = user)

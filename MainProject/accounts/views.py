@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from .forms import LoginForm
 # def login(request):
 #     form  = LoginForm()
 #     return render(request,'accounts/login.html',{'form':form})
@@ -12,15 +11,22 @@ from django.views import View
 from django.shortcuts import redirect
 from .forms import *
 from django.contrib.auth.models import User
+from django.contrib import messages
 class Login(View):
     def get(self,request):
-        login_form = LoginForm()
-        context = {
-            'login_form': login_form
-        }
-        return render(request,'accounts/login.html',context)
+        return render(request,'accounts/login.html')
     def post(self,request):
-        pass
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        next_url = request.GET.get('next', '/')
+        user  = authenticate(request,username=username,password=password)
+        if user:
+            login(request,user)
+            messages.success(request,'Login Successfully Done')
+            return redirect(next_url)
+        
+        else:
+            return redirect('login')
 
 class Register(View):
     def get(self,request):
@@ -36,25 +42,23 @@ class Register(View):
         user_form = UserRegisterForm(request.POST)
         customer_form = CustomerRegisterForm(request.POST)
         if user_form.is_valid() and customer_form.is_valid():
-            user = user_form.save()
+            user =User.objects.create_user(
+                                            username = user_form.cleaned_data['username'],
+                                            first_name = user_form.cleaned_data['first_name'],
+                                            last_name = user_form.cleaned_data['last_name'],
+                                            email = user_form.cleaned_data['email'],
+                                            password = user_form.cleaned_data['password'],
+                                        )
             customer = customer_form.save(commit=False)
             customer.user = user
             customer.save()
             login(request,user)
-            return redirect('/')
-        #     username = user_form.cleaned_data['username']
-        #     first_name = user_form.cleaned_data['first_name']
-        #     last_name = user_form.cleaned_data['last_name']
-        #     email = user_form.cleaned_data['email']
-        #     password = user_form.cleaned_data['password']
-        #     user =User.objects.create_user(
-        #         username=username,
-        #         email = email,
-        #         first_name = first_name,
-        #         last_name = last_name,
-        #         password= password,
-        #     )
-        return redirect('/')
+            return redirect('/')   
+        context = {
+            'user_form':user_form,
+            'customer_form': customer_form
+        }
+        return render(request,'accounts/register.html',context)
 
 
 def logout_customer(request):

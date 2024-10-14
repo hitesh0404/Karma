@@ -51,6 +51,15 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 						<ul class="nav navbar-nav menu_nav ml-auto">
+							
+							<li class="nav-item">
+								
+								{% if request.user.is_authenticated %}
+								Hello {{request.user}}
+								{% endif %}
+				
+							
+							</li>
 							<li class="nav-item active"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
 							<li class="nav-item submenu dropdown">
 								<a href="{% static '#' %}" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -101,6 +110,15 @@
 								</ul>
 							</li>
 							<li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+							<br>
+							{% if messages %}
+							{% for message in messages %}
+							<div class="{{message.tags}}" style="margin: 20px 120px; ">
+								<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+								{{ message }}
+							</div>
+							{% endfor %}
+							{% endif %}
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="nav-item"><a href="{% url 'cart' %}" class="cart"><span class="ti-bag">{{count}}</span></a></li>

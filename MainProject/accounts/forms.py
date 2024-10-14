@@ -16,7 +16,7 @@ class AddressForm(ModelForm):
     class Meta:
         model = Address
         exclude = ['user']
-class LoginForm(forms.Form):
-    username = forms.CharField(max_length=25)
-    password = forms.CharField(widget=forms.PasswordInput(attrs = {'placeholder':'password'}))
+# class LoginForm(forms.Form):
+#     username = forms.CharField(max_length=25)
+#     password = forms.CharField(widget=forms.PasswordInput(attrs = {'placeholder':'password'}))
     

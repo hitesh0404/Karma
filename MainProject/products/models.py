@@ -34,6 +34,7 @@ class Product(models.Model):
     gst_rate = models.DecimalField(max_digits=5,decimal_places=2,default=5.00)
     hsn_code = models.CharField(max_length=10,default=None)
     quantity =  models.IntegerField(default=1)
+    image = models.ImageField(upload_to='products/',default=r'\products\p7.jpg')
     # def save(self,commit=False):
     #     data = get_object_or_404(HsnCode,item_code=self.hsn_code)
     #     if (data):
@@ -48,7 +49,6 @@ class Product(models.Model):
     
     def __str__(self):
         return f'({self.name}) from {self.brand.name}'
-    # image = models.ImageField(upload_to='products/')
     class Meta:
         db_table = 'Product'
 
