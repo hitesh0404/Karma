@@ -12,6 +12,7 @@ from django.shortcuts import redirect
 from .forms import *
 from django.contrib.auth.models import User
 from django.contrib import messages
+from cart.models import Cart
 class Login(View):
     def get(self,request):
         return render(request,'accounts/login.html')
@@ -23,6 +24,9 @@ class Login(View):
         if user:
             login(request,user)
             messages.success(request,'Login Successfully Done')
+            count =Cart.objects.filter(user = user).count() 
+            request.session['cart_item_count'] = count
+            
             return redirect(next_url)
         
         else:

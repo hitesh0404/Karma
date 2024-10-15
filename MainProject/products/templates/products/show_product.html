@@ -6,6 +6,17 @@
 <br>
 <br>
 <br>
+<div class="row">
+    <div class="col-3" style="background-color: rgb(241, 162, 88);">
+       <li style="font-weight: 900; font-size: 20px;">Category</li> 
+            <ol>
+                <li><a href="">Formal</a></li>
+                <li><a href="">Casual</a></li>
+                <li><a href="">Leather</a></li>
+                <li><a href="">Sport</a></li>
+            </ol>
+    </div>
+<div class="col-9">
 {% for p in products %}
     {{p.id}}
     <img height="" width="" src="{{p.image.url}}" alt="{{p.name}}">
@@ -14,5 +25,6 @@
     <a href="{% url 'update_product' p.id %}"> Update this product</a><br><hr><br>
     <a href="{% url 'add_to_cart' p.id %}">Add To Cart</a><br><hr><br>
 {% endfor %}
-
+</div>
+</div>
 {% endblock %}

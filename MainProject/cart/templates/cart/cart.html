@@ -11,12 +11,13 @@
     <div class="card-body">
         <h5 class="card-title">{{ item.product.name }}</h5>
         <p class="card-text">price: {{ item.product.price_inclusive }}</p>
-        
+
         <p class="card-text">quantity:
        
-            <input type="number" min="1" max="{{item.product.quantity}}" step="1" 
+            <input type="number" min="0" max="{{item.product.quantity}}" step="1" 
              value="{{ item.quantity }}" name="{{item.id}}">
         </p>
+        <p class="btn"><a  style="color: red;" href="{% url 'remove_item_from_cart' item.id %}"> Remove From Cart</a></p>
 
 
         
@@ -28,6 +29,9 @@
 <a href="{% url 'clear_cart' %}" style="color:red"> Clear Cart</a>
 <input type="submit" value="Update Cart">
 </form>
+
+<p><a href="">Check Out</a></p>
+
 {% else %}
 <p>your cart is empty</p>
 {% endif %}

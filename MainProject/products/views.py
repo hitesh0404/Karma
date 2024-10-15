@@ -33,17 +33,10 @@ class UpdateProduct(View):
             # form = ProductForm(request.POST)
             return render(request,'products/update_product.html',{'form':form})
 
-        
 
-from cart.models import Cart
-from django.contrib.auth.models import User
 def show_product(request):
     products = Product.objects.all()
-    user = request.user
-    user = get_object_or_404(User,username=user)
-    count =Cart.objects.filter(user = user).count()
     context ={
         'products':products,
-        'count' : count
     }
     return render(request,'products/show_product.html',context)

@@ -80,3 +80,10 @@ class ShoeStyle(models.Model):
     def __str__(self):
         return f'{self.shoe}  {self.style}' 
 
+
+class ShoeCategory(models.Model):
+    name = models.CharField(max_length=20,unique=True)
+    description = models.CharField(max_length=100)
+    shoe = models.ManyToManyField(Shoe)
+    class Meta:
+        db_table = 'Shoe_Category'
