@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'cart.apps.CartConfig',
     'order.apps.OrderConfig',
+    'payment.apps.PaymentConfig',
     'django_extensions',
     #python manage.py shell_plus --print-sql
     # u = User.objects.all()
@@ -143,3 +144,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+from decouple import config
+RAZORPAY_KEY_ID = config('RAZORPAY_KEY_ID')
+RAZORPAY_KEY_SECRET = config('RAZORPAY_KEY_SECRET')
