@@ -162,7 +162,7 @@ document.getElementById('rzp-button1').onclick = function(e){
                     "description": "Test Transaction",
                     "image": "https://example.com/your_logo",
                     "order_id": data.payment.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-                    "callback_url": data.callback_url,
+                    "callback_url": "http://127.0.0.1:8000/payment/verify-payment/",
                     "prefill": {
                         "name": "Gaurav Kumar",
                         "email": "gaurav.kumar@example.com",
