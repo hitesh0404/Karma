@@ -8,6 +8,8 @@ class Customer(models.Model):
     user  = models.OneToOneField(User,on_delete=models.CASCADE)
     gender = models.CharField(choices=gender_choice,max_length=1,default=None)
     D_O_B = models.DateField(default=None )
+    def __str__(self) -> str:
+        return self.user.username
     
 
 STATE_CHOICES = [
@@ -59,6 +61,7 @@ class Address(models.Model):
     area = models.CharField(max_length=30)
     city = models.CharField(max_length=30)
     state = models.CharField(max_length=2,choices=STATE_CHOICES)
-
+    def __str__(self) -> str:
+        return self.user.user.username+' '+self.title 
 
 

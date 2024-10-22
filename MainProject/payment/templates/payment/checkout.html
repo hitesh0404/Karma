@@ -147,11 +147,13 @@
 <script>
 
 document.getElementById('rzp-button1').onclick = function(e){
-    fetch("{% url 'payment' %}")
+    fetch("{% url 'proceed_to_pay' %}")
     .then((response) => { 
             return response.json()
             .then((data) => {
                 console.log(data);
+                console.log(data.callback_url);
+                
                 var options = {
                     "key": data.RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
                     "amount": data.payment.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -160,7 +162,7 @@ document.getElementById('rzp-button1').onclick = function(e){
                     "description": "Test Transaction",
                     "image": "https://example.com/your_logo",
                     "order_id": data.payment.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-                    "callback_url": "/",
+                    "callback_url": data.callback_url,
                     "prefill": {
                         "name": "Gaurav Kumar",
                         "email": "gaurav.kumar@example.com",
