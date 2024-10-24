@@ -57,7 +57,7 @@ class Shoe(models.Model):
     class Meta:
         db_table='Shoe'
     def __str__(self):
-        return f'({self.product}) : ₹ {self.product.price:.2f}  '
+        return f'({self.product}) : ₹ {self.product.price_inclusive:.2f}  '
 
 class Style(models.Model):
     color = models.CharField(max_length=20)
@@ -84,6 +84,17 @@ class ShoeStyle(models.Model):
 class ShoeCategory(models.Model):
     name = models.CharField(max_length=20,unique=True)
     description = models.CharField(max_length=100)
-    shoe = models.ManyToManyField(Shoe)
+    shoe = models.ManyToManyField(Shoe,through='ShoeCategoryShoe')
     class Meta:
         db_table = 'Shoe_Category'
+
+
+class ShoeCategoryShoe(models.Model):
+    shoe = models.ForeignKey(Shoe, on_delete=models.CASCADE,null=True)
+    shoecategory = models.ForeignKey(ShoeCategory, on_delete=models.CASCADE,null=True)
+    class Meta:
+        unique_together = (('shoe', 'shoecategory'),)
+        db_table = 'Shoe_Category_shoe'
+    def __str__(self):
+        return f'{self.shoe}  {self.shoecategory}' 
+

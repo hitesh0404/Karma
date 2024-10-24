@@ -10,10 +10,10 @@
     <div class="col-3" style="background-color: rgb(241, 162, 88);">
        <li style="font-weight: 900; font-size: 20px;">Category</li> 
             <ol>
-                <li><a href="">Formal</a></li>
-                <li><a href="">Casual</a></li>
-                <li><a href="">Leather</a></li>
-                <li><a href="">Sport</a></li>
+            {% for cat in category %}
+                <li><a href="{% url 'sort_by_category' cat.name %}">{{cat.name}}</a></li>
+    
+            {% endfor %}
             </ol>
     </div>
 <div class="col-9">

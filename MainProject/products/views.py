@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.views import View
 from .forms import ProductForm
-from .models import Product
+from .models import Product,ShoeCategory,Shoe
 
 class AddProduct(View):
     def get(self,request):
@@ -36,7 +36,22 @@ class UpdateProduct(View):
 
 def show_product(request):
     products = Product.objects.all()
+    shoe_category = ShoeCategory.objects.all() 
     context ={
         'products':products,
+        'category':shoe_category,
+    }
+    return render(request,'products/show_product.html',context)
+
+
+def sort_by_category(request,name):
+    cat = ShoeCategory.objects.get(name=name)
+    shoecategoryshoe = cat.shoecategoryshoe_set.all()
+    products = [product.shoe.product for product in shoecategoryshoe]
+    print(products)
+    shoe_category = ShoeCategory.objects.all() 
+    context ={
+        'products':products,
+        'category':shoe_category,
     }
     return render(request,'products/show_product.html',context)
