@@ -15,13 +15,20 @@
     
             {% endfor %}
             </ol>
+        <li style="font-weight: 900; font-size: 20px;">Price</li>
+            <ol>
+                <li><a href="{% url 'sort_by_price' '0&500' %}">&lt;500</a></li>
+                <li><a href="{% url 'sort_by_price' '1000&5000' %}">1000&lt; and &lt;5000</a></li>
+                <li><a href="{% url 'sort_by_price' '5000&40000' %}">5000&lt; and &lt;000</a></li>
+
+            </ol>
     </div>
 <div class="col-9">
 {% for p in products %}
     {{p.id}}
     <img height="" width="" src="{{p.image.url}}" alt="{{p.name}}">
     {{p.name}}
-    {{p.price}}
+    {{p.price_inclusive}}
     <a href="{% url 'update_product' p.id %}"> Update this product</a><br><hr><br>
     <a href="{% url 'add_to_cart' p.id %}">Add To Cart</a><br><hr><br>
 {% endfor %}
