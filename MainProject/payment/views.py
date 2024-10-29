@@ -91,6 +91,6 @@ def verify_payment(request):
         cart.delete()
         return redirect('/')
     except Exception as e:
-        print(e)
+        print(e)    
         return redirect('cart')
 

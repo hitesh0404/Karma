@@ -1,4 +1,5 @@
 from django.db import models
+from autoslug import AutoSlugField
 class HsnCode(models.Model):
     index = models.BigAutoField(primary_key=True)
     item_code = models.BigIntegerField(verbose_name='Item Code',null=True) 
@@ -28,6 +29,7 @@ class Brand(models.Model):
 from django.shortcuts import get_object_or_404
 class Product(models.Model):
     name = models.CharField(max_length=20)
+    slug = AutoSlugField(populate_from='name',blank=True,unique=True,null=True)
     price_inclusive = models.DecimalField(decimal_places=2,max_digits=10)
     description = models.TextField(default='default Description')
     brand = models.ForeignKey(Brand,on_delete=models.CASCADE,null=True)

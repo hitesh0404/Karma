@@ -29,7 +29,7 @@
     <img height="" width="" src="{{p.image.url}}" alt="{{p.name}}">
     {{p.name}}
     {{p.price_inclusive}}
-    <a href="{% url 'update_product' p.id %}"> Update this product</a><br><hr><br>
+    <a href="{% url 'update_product' p.slug %}"> Update this product</a><br><hr><br>
     <a href="{% url 'add_to_cart' p.id %}">Add To Cart</a><br><hr><br>
 {% endfor %}
 </div>

@@ -6,10 +6,12 @@ brand2 = Brand.objects.create(name='Adidas', description='Global Sportswear Bran
 brand3 = Brand.objects.create(name='Puma', description='German Sports Brand')
 brand4 = Brand.objects.create(name='Reebok', description='Athletic Footwear Brand')
 
+
+hsn1,hsn2,hsn3 = HsnCode.objects.all()[0:3]
 # Step 2: Create HsnCode Records
-hsn1 = HsnCode.objects.create(index= 1041,item_code=12345, item_name='Shoes', item_type='Footwear', GSTe=5.00, hsn_code=640299, GST=5.00)
-hsn2 = HsnCode.objects.create(index= 1042,item_code=12346, item_name='Sports Shoes', item_type='Athletic Footwear', GSTe=12.00, hsn_code=640391, GST=12.00)
-hsn3 = HsnCode.objects.create(index= 1043,item_code=12347, item_name='Running Shoes', item_type='Footwear', GSTe=18.00, hsn_code=640411, GST=18.00)
+# hsn1 = HsnCode.objects.create(index= 1041,item_code=12345, item_name='Shoes', item_type='Footwear', GSTe=5.00, hsn_code=640299, GST=5.00)
+# hsn2 = HsnCode.objects.create(index= 1042,item_code=12346, item_name='Sports Shoes', item_type='Athletic Footwear', GSTe=12.00, hsn_code=640391, GST=12.00)
+# hsn3 = HsnCode.objects.create(index= 1043,item_code=12347, item_name='Running Shoes', item_type='Footwear', GSTe=18.00, hsn_code=640411, GST=18.00)
 
 # Step 3: Create Initial Product Records
 product1 = Product.objects.create(name='Air Max', price_inclusive=5000, description='Nike Air Max Shoes', brand=brand1, gst_rate=hsn1.GSTe, hsn_code=hsn1.hsn_code)
@@ -56,14 +58,14 @@ for i in range(5, 21):
     )
     shoe = Shoe.objects.create(product=product)
     
-    style_data = styles[i % 4]
-    style = Style.objects.create(
-        color=style_data['color'],
-        size=style_data['size'],
-        type=style_data['type'],
-        material=style_data['material']
-    )
-    ShoeStyle.objects.create(shoe=shoe, style=style)
+    # style_data = styles[i % 4]
+    # style = Style.objects.create(
+    #     color=style_data['color'],
+    #     size=style_data['size'],
+    #     type=style_data['type'],
+    #     material=style_data['material']
+    # )
+    # ShoeStyle.objects.create(shoe=shoe, style=style)
 
 # Step 8: Verify Record Creation
 Product.objects.all()  # to list all products
