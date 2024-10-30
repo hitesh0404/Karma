@@ -9,6 +9,7 @@ from order.models import Order,OrderDetails
 from .models import Payment
 from accounts.models import Customer,Address
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import send_mail
 
 def checkout(request):
     return render(request,'payment/checkout.html')
@@ -75,20 +76,36 @@ def verify_payment(request):
         print('done succesful Payment')
         payment_obj = Payment.objects.get(razorpay_order_id =str(request.POST.get('razorpay_order_id')))
         cart = Cart.objects.filter(user = payment_obj.user)
-        print(cart)
+        print('\n\n\n\n\n\n\n\n',cart,'\n\n\n\n\n\n\n')
         order_obj = payment_obj.order
         payment_obj.razorpay_payment_id = str(request.POST.get('razorpay_payment_id'))
         payment_obj.payment_signature = str( request.POST.get('razorpay_signature'))
         payment_obj.status = "COMPLETED"
         payment_obj.save()
+        items = ''
         for item in cart:
             OrderDetails.objects.create(
                 order_id = order_obj,
                 product = item.product,
                 quantity = item.quantity,
-                price = item.product.price_inclusive
-            )
+                price = item.product.price_inclusive)
+            items = items + " {}  {} {} \n".format(item.product.name,item.quantity,int(item.quantity) * float(item.product.price_inclusive) )
+
         cart.delete()
+        
+        send_mail(subject='Order Confirmed '+str(order_obj),
+        message=f'''
+                YourOrder id is: {order_obj.order_uuid}
+                Ordered Items are:
+                {items}
+                Total Ordered Amount is : {order_obj.total}
+                Payment Status : {payment_obj.status}
+          ''',
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[payment_obj.user.email],
+        fail_silently=True
+        )
+        #print(EMAIL_HOST,EMAIL_HOST_PASSWORD,EMAIL_HOST_USER,EMAIL_PORT,EMAIL_USE_TLS)
         return redirect('/')
     except Exception as e:
         print(e)    

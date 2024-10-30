@@ -32,7 +32,7 @@
 </form>
 
 <p><a href="{% url 'checkout' %}">Check Out</a></p>
-<div style="float: right;"><h1>Total :{{ cart|total_price }}</h1> </div>
+<div style="float: right;"><h1 style="font-weight: 500;text-decoration: underline;border: 3px solid black; padding: 3px 20px;">Total :&#8377; {{ cart|total_price }}</h1> </div>
 <br><br>
 {% else %}
 <p>your cart is empty</p>
