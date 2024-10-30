@@ -1,3 +1,15 @@
+#create env and run command pip install -r requirement.txt after going inside main project
+
+#create .env file inside mainproject folder and fill data with apropriate fields
+
+#run python manage.py migrate
+
+#run python manage.py shell
+#>import data
+#ctl z
+
+#python manage.py runserver
+
 # .env file inside mainProject
 
 # RAZORPAY_KEY_ID=
@@ -18,7 +30,7 @@ import datetime
 
 # User and Customer Creation
 user = User.objects.create_superuser(username='admin', password='123', email='admin@gmail.com')
-customer = Customer.objects.create(user=user, D_O_B=datetime.date(2004, 4, 4))
+customer = Customer.objects.create(user=user, D_O_B=datetime.date(2004, 4, 4),gender= 'Male')
 Address.objects.create(user=customer, title='home', block_number='203', building='kaka', street='shastri', land_mark='andheri', area='Mumbai', city='Mumbai', state='Maharashtra')
 
 # Step 1: Create Brands
@@ -73,9 +85,10 @@ for color, size, style_type, material in unique_styles_data:
     styles.append(Style.objects.create(color=color, size=size, type=style_type, material=material))
 
 # Step 5: Create ShoeStyle Relationships
-shoes = Shoe.objects.all()
-for shoe in shoes:
-    style = styles[shoes.index(shoe) % len(styles)]  # Cycle through styles
+# Step 5: Create ShoeStyle Relationships
+shoes = list(Shoe.objects.all())  # Convert QuerySet to a list
+for i, shoe in enumerate(shoes):
+    style = styles[i % len(styles)]  # Cycle through styles
     ShoeStyle.objects.create(shoe=shoe, style=style)
 
 # Verify Record Creation
