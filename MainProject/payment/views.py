@@ -103,7 +103,7 @@ def verify_payment(request):
                 YourOrder id is: {order_obj.order_uuid}
                 Ordered Items are:
                 {items}
-                Total Ordered Amount is : {order_obj.total}
+                Total Ordered Amount is : {order_obj.total/100}
                 Payment Status : {payment_obj.status}
           ''',
         from_email=settings.EMAIL_HOST_USER,

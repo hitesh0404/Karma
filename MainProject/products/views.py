@@ -3,6 +3,8 @@ from django.views import View
 from .forms import ProductForm
 from .models import Product,ShoeCategory,Shoe
 from django.db.models import Q
+from django.core.paginator import Paginator
+
 class AddProduct(View):
     def get(self,request):
         form = ProductForm()
@@ -46,10 +48,15 @@ def show_product(request):
         products = search_products(search)
     else:
         products = Product.objects.all()
+
+    paginator = Paginator(products,2)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     shoe_category = ShoeCategory.objects.all() 
     context ={
-        'products':products,
+        'products':page_obj.object_list,
         'category':shoe_category,
+        'page_obj':page_obj
     }
     return render(request,'products/show_product.html',context)
 
