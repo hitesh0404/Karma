@@ -45,13 +45,11 @@
                 </a>
             </li>
         {% endif %}
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">1</a>
+        {% for i in range %}
+            <li class="page-item {% if page_obj.number == i %}active{% endif %}" aria-current="page">
+                <a class="page-link" href="?page={{i}}">{{i}}</a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">3</a>
-            </li>
+        {% endfor  %} 
             {% if page_obj.has_next  %}
             <li class="page-item">
                 <a class="page-link" href="?page={{page_obj.next_page_number}}" aria-label="Next">

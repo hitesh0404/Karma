@@ -56,7 +56,8 @@ def show_product(request):
     context ={
         'products':page_obj.object_list,
         'category':shoe_category,
-        'page_obj':page_obj
+        'page_obj':page_obj,
+        'range':paginator.page_range
     }
     return render(request,'products/show_product.html',context)
 
