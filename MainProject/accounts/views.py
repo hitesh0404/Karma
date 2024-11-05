@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 
 
-
+from django.shortcuts import get_object_or_404
 from django.contrib.auth import logout,login,authenticate
 from django.views import View
 from django.shortcuts import redirect
@@ -68,3 +68,39 @@ class Register(View):
 def logout_customer(request):
     logout(request)
     return redirect('/')
+
+
+
+import random
+class ForgotPassword(View):
+    def get(self,request):
+        context = {
+            'form': ForgotPasswordForm(),
+            'form_name':'Enter your username with E-Mail',
+            'title':'Forgot Password'
+        }
+        return render(request,'accounts/form.html',context)
+
+    def post(self,request):
+        print('hello\n\n\n\n')
+        username = request.POST.get('username')
+        user = get_object_or_404(User,username = username )
+        email = request.POST.get('email')
+        if email == user.email:
+            otp = random.randint(1000,9999)
+            # send_otp(email,otp)
+            print('\n\n\n\n',otp,'\n\n\n\n')
+            request.session['otp']= int(otp)
+            context = {
+                'form': OTPForm(),
+                'form_name':'Enter your OTP which is sent to registered E-Mail',
+                'title':'OTP Verify',
+                'form_action':'/accounts/verify-otp/'
+            }
+            return render(request,'accounts/form.html',context)
+        else:
+            return redirect('login')
+            
+
+def verify_otp(request):
+    return redirect('home')

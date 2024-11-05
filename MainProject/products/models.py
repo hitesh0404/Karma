@@ -25,9 +25,13 @@ class Brand(models.Model):
         return f'({self.name}) : {self.description}'
 
 
+class MyManager(models.Manager):
+    def my_product(self,start,stop,step):
+        return self.all()[start:stop:step]
     
 from django.shortcuts import get_object_or_404
 class Product(models.Model):
+    objects = MyManager()
     name = models.CharField(max_length=20)
     slug = AutoSlugField(populate_from='name',blank=True,unique=True,null=True)
     price_inclusive = models.DecimalField(decimal_places=2,max_digits=10)
