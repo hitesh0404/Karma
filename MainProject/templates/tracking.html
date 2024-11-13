@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load total %}
 
 {% block content %}
 
@@ -40,5 +41,39 @@
             </div>
         </div>
     </section>
+
+
+    <div class="container-sm bg-primary">100% wide until small breakpoint</div>
+    <div class="container-md bg-warning">100% wide until medium breakpoint</div>
+    <div class="container-lg bg-success">100% wide until large breakpoint</div>
+    <div class="container-xl bg-danger">100% wide until extra large breakpoint</div>
+    <div class="container-xxl bg-info">100% wide until extra extra large breakpoint</div>
+    <div class="container-fluid bg-info">100% wide until extra extra large breakpoint</div>
+
+    <div class="row ">
+        {% for i in 10|times %}
+            <div class="col-4  gy-5" style="border: 2px solid green;">
+                <div class="row ">
+                    {% for j in 3|times %}
+                        <div class="col-2" style="border: 2px solid rgb(11, 47, 229);">
+                            <h3>i= {{i}}, j={{j}}</h3>  
+                            <img class="m-1" src="/static/img/i2.jpg"  alt=""> 
+                        </div>
+                    {% endfor %}
+                    <span class="col-1" style="border: 2px solid rgb(241, 17, 9);"></span>
+                    <span class="col-4" style="text-align: justify;" style="border: 2px solid rgb(228, 228, 7);"> 
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                            Reiciendis natus eum amet est adipisci nemo sequi commodi provident? Atque, quam?
+                    </span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div style="position: relative;">
+        <div style="background-color: aqua;z-index: 3;  height:100px; width:100px; position:absolute; top:10px; left:10px; "></div>
+        <div style="background-color: green;z-index: 4;   height:100px; width:100px; position:absolute;  top:20px; left:20px;"></div>
+        <div style="background-color: red;z-index: 5;  height:100px; width:100px; position:absolute; top:30px;left:30px; "></div>
+    </div>
     <!--================End Tracking Box Area =================-->
 {% endblock %}

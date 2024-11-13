@@ -91,6 +91,7 @@ class ForgotPassword(View):
             # send_otp(email,otp)
             print('\n\n\n\n',otp,'\n\n\n\n')
             request.session['otp']= int(otp)
+            request.session['username']=user.username
             context = {
                 'form': OTPForm(),
                 'form_name':'Enter your OTP which is sent to registered E-Mail',
@@ -103,4 +104,42 @@ class ForgotPassword(View):
             
 
 def verify_otp(request):
-    return redirect('home')
+    if request.method == 'POST':
+        otp = int(request.session.get('otp'))
+        username = request.session.get('username')
+        form_data = int(request.POST.get('otp'))
+        if otp == form_data:
+            context ={
+                'form':ResetPasswordForm(),
+                'form_name':f'Enter new Password for username {username}',
+                'title':'Reset Password',
+                'form_action':'/accounts/reset-password/',
+            }
+            return render(request,'accounts/form.html',context)
+    else:
+        return redirect('home')
+
+
+def reset_password(request):
+    if request.method == 'POST':
+        pass1 = request.POST.get('password')
+        pass2 = request.POST.get('confirm_password')
+        username = request.session.get('username')  
+        if pass1 == pass2:
+            user = get_object_or_404(User,username=username)
+            user.set_password(pass1)
+            user.save()
+            return redirect('login')
+        else:
+            context ={
+                'form':ResetPasswordForm(data = request.POST),
+                'form_name':f"password and confirm password is not same for user:{username}",
+                'title':'Reset Password',
+                'form_action':'/accounts/reset-password/'
+            }
+            return render(request,'accounts/form.html',context)
+        
+    
+    else:
+        return redirect('home')
+  

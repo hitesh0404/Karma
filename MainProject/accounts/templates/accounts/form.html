@@ -42,6 +42,9 @@
 								<input type="submit" value="Submit Button" class="primary-btn">
 							</div>
 						</form>
+						{% if title == 'OTP Verify' %}
+  						<button type="button" onclick="window.location.reload();">Resend OTP</button>
+						{% endif %}
 					</div>
 				</div>
 			</div>

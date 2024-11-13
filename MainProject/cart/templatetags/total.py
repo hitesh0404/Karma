@@ -7,3 +7,8 @@ def total_price(value):
     for i in value:
         result += (i.product.price_inclusive * i.quantity)
     return result
+
+
+@register.filter(name='times') 
+def times(number):
+    return range(number)
