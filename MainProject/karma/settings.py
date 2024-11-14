@@ -94,10 +94,10 @@ WSGI_APPLICATION = 'karma.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'karma',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',  # Set to 'localhost' or your database server address
+        'NAME': 'hiteshprajapati3$karma',
+        'USER': 'hiteshprajapati3',
+        'PASSWORD': 'DvaMhG!VzH5c_2A',
+        'HOST': 'hiteshprajapati388577.mysql.pythonanywhere-services.com',  # Set to 'localhost' or your database server address
         'PORT': '3306',  # Default port for MySQL/MariaDB
     }
 }
