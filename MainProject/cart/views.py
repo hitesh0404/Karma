@@ -22,7 +22,7 @@ def add_to_cart(request,id):
         obj.save()
         return redirect('product_list')
     except Cart.DoesNotExist as e:
-        request.session['cart_item_count'] +=1
+        #request.session['cart_item_count'] +=1
         Cart.objects.create(user=user,product = product,quantity=1)
     return redirect('product_list')
 @login_required 
@@ -32,7 +32,7 @@ def cart(request):
     return render(request,'cart/cart.html',{'cart':cart})
 @login_required
 def clear_cart(request):
-    request.session['cart_item_count'] = 0
+    #request.session['cart_item_count'] = 0
     user  = get_object_or_404(User,username=request.user)
     Cart.objects.filter(user = user).delete()
     return redirect('product_list')
@@ -49,7 +49,7 @@ def update_cart(request):
         quantity = request.GET.get(str(item.id))
         if int(quantity)<1:
             item.delete()
-            request.session['cart_item_count'] -=1
+            #request.session['cart_item_count'] -=1
         else:
             item.quantity = quantity
             item.save()
@@ -59,5 +59,5 @@ def update_cart(request):
 @login_required    
 def remove_item_from_cart(request,id):
     Cart.objects.get(id = id).delete()
-    request.session['cart_item_count'] -=1
+    #request.session['cart_item_count'] -=1
     return redirect('cart')

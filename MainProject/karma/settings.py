@@ -74,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart_items',
             ],
         },
     },
@@ -94,13 +95,24 @@ WSGI_APPLICATION = 'karma.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hiteshprajapati3$karma',
-        'USER': 'hiteshprajapati3',
-        'PASSWORD': 'DvaMhG!VzH5c_2A',
-        'HOST': 'hiteshprajapati388577.mysql.pythonanywhere-services.com',  # Set to 'localhost' or your database server address
+        'NAME': 'karma',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',  # Set to 'localhost' or your database server address
         'PORT': '3306',  # Default port for MySQL/MariaDB
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'hiteshprajapati3$karma',
+#         'USER': 'hiteshprajapati3',
+#         'PASSWORD': 'DvaMhG!VzH5c_2A',
+#         'HOST': 'hiteshprajapati388577.mysql.pythonanywhere-services.com',  # Set to 'localhost' or your database server address
+#         'PORT': '3306',  # Default port for MySQL/MariaDB
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

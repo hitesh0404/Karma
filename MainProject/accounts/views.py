@@ -24,9 +24,6 @@ class Login(View):
         if user:
             login(request,user)
             messages.success(request,'Login Successfully Done')
-            count =Cart.objects.filter(user = user).count() 
-            request.session['cart_item_count'] = count
-            
             return redirect(next_url)
         
         else:
